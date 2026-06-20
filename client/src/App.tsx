@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Sparkles, Plus, Search, Moon, Sun, FileText, Star, Clock, Settings, ChevronDown, Wand2, Mic, MoreHorizontal } from 'lucide-react';
+import Button from './components/ui/Button';
 
 const notes = [
   { id: 1, title: 'Q3 Product Roadmap', preview: 'Key milestones for the AI summarization engine and onboarding flow redesign...', tag: 'Work', time: '2h ago', active: true },
@@ -200,6 +201,7 @@ export default function App() {
                 <p className="text-xs text-text-secondary leading-relaxed">
                   Press <span className="font-mono">⌘K</span> anywhere to summon AI actions for the note you're editing.
                 </p>
+              <Button>hello</Button>
               </div>
             </div>
           </aside>
