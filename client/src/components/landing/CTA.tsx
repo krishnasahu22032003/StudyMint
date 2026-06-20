@@ -1,6 +1,7 @@
 import { motion, type Variants } from "framer-motion";
 import { Sparkles, ArrowRight } from "lucide-react";
 import Button from "../ui/Button";
+import handleGoogleAuth from "../../utils/handlegoogleauth";
 
 const easeOut = [0.22, 1, 0.36, 1] as const;
 
@@ -117,6 +118,7 @@ const CTA = () => {
                   size="lg"
                   icon={ArrowRight}
                   className="min-w-[220px] cursor-pointer"
+                  onClick={handleGoogleAuth}
                 >
                   Get Started Free
                 </Button>

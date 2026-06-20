@@ -14,6 +14,7 @@ import {
   FileText,
 } from "lucide-react";
 import Button from "../ui/Button";
+import handleGoogleAuth from "../../utils/handlegoogleauth";
 
 const easeOut = [0.22, 1, 0.36, 1] as const;
 
@@ -155,7 +156,7 @@ const Hero = () => {
             variants={fadeUp}
             className="mt-10 flex flex-col sm:flex-row items-center gap-3"
           >
-            <Button variant="primary" size="lg" icon={Sparkles} className="cursor-pointer">
+            <Button variant="primary" size="lg" icon={Sparkles} className="cursor-pointer" onClick={handleGoogleAuth}>
               Generate your first note
             </Button>
           </motion.div>

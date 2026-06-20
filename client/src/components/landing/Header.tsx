@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Menu, X, Moon, Sun, Sparkles, ArrowRight } from "lucide-react";
 import { useTheme } from "../../context/ThemeContext";
 import Button from "../ui/Button";
+import handleGoogleAuth from "../../utils/handlegoogleauth";
 
 const navLinks = [
   { label: "Features", href: "#features" },
@@ -159,7 +160,7 @@ const Header = () => {
 
             <div className="flex items-center gap-3">
               <ThemeToggle />
-              <Button variant="primary" size="md" icon={Sparkles} className="cursor-pointer">
+              <Button variant="primary" size="md" icon={Sparkles} className="cursor-pointer" onClick={handleGoogleAuth}>
                 Get Started
               </Button>
             </div>
@@ -207,7 +208,7 @@ const Header = () => {
             ))}
 
             <div className="pt-4 mt-2 border-t border-border">
-              <Button variant="primary" fullWidth icon={ArrowRight} iconPosition="right" className="cursor-pointer">
+              <Button variant="primary" fullWidth icon={ArrowRight} iconPosition="right" className="cursor-pointer" onClick={handleGoogleAuth}>
                 Get Started
               </Button>
             </div>
