@@ -2,7 +2,7 @@
 
 @import "tailwindcss";
 
-@custom-variant dark (&:where(.dark, .dark *));
+@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
 
 :root {
   --bg: #f6f6f8;
@@ -27,7 +27,7 @@
   --shadow-color: 21 20 26;
 }
 
-.dark {
+[data-theme="dark"] {
   --bg: #0e0d11;
   --bg-secondary: #15141a;
   --surface: #1a1920;
