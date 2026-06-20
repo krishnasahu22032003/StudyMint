@@ -1,9 +1,13 @@
+import { useTheme } from "./context/ThemeContext"
 
 type Props = {}
 
 const App = (props: Props) => {
+   const { theme, toggleTheme } = useTheme();
   return (
-    <div className="bg-red-300 text-amber-400">Hello world</div>
+     <button onClick={toggleTheme}>
+      {theme === "light" ? "🌙" : "☀️"}
+    </button>
   )
 }
 
