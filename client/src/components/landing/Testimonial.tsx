@@ -187,7 +187,7 @@ const Testimonials = () => {
                 Loved by learners.
               </span>
 
-              <span className="block mt-2 text-gradient-accent">
+              <span className="mt-2 text-gradient-accent">
                 Built for better studying.
               </span>
             </h2>

@@ -2,6 +2,7 @@ import About from "../components/landing/About";
 import Features from "../components/landing/Features";
 import Header from "../components/landing/Header";
 import Hero from "../components/landing/Hero";
+import Pricing from "../components/landing/Pricing";
 import Testimonials from "../components/landing/Testimonial";
 
 
@@ -13,6 +14,7 @@ const LandingPage = () => {
 <Features/>
 <About/>
 <Testimonials/>
+<Pricing/>
     </main>
   );
 };
