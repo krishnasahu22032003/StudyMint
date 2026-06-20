@@ -154,7 +154,7 @@ const TestimonialCard = ({
 
 const Testimonials = () => {
   return (
-    <section className="relative py-32 overflow-hidden">
+    <section id="testimonials" className="relative py-32 overflow-hidden">
       <div className="absolute inset-0 ink-grid opacity-50 [mask-image:radial-gradient(circle_at_center,black,transparent)]" />
 
       <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[42rem] h-[42rem] rounded-full bg-accent/5 blur-[160px]" />

@@ -173,7 +173,7 @@ const FeatureCard = ({
 
 const Features = () => {
   return (
-<section className="relative py-32 overflow-hidden">
+<section id="features" className="relative py-32 overflow-hidden">
   <div className="absolute inset-0 ink-grid opacity-50 [mask-image:radial-gradient(circle_at_center,black,transparent)]" />
 
   <div className="absolute left-1/2 top-0 -translate-x-1/2 w-[40rem] h-[40rem] rounded-full bg-accent/5 blur-[140px]" />

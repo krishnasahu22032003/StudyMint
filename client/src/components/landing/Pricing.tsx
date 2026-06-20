@@ -44,7 +44,7 @@ const plans = [
     },
     {
         name: "Pro",
-        price: "9",
+        price: "1",
         description: "For students who want unlimited productivity and focus.",
         featured: true,
         features: [
@@ -58,7 +58,7 @@ const plans = [
     },
     {
         name: "Team",
-        price: "19",
+        price: "2",
         description: "For study groups, classrooms, and collaborative learning.",
         featured: false,
         features: [
@@ -173,7 +173,7 @@ const PricingCard = ({
 
 const Pricing = () => {
     return (
-        <section className="relative py-32 overflow-hidden">
+        <section id="pricing" className="relative py-32 overflow-hidden">
             <div className="absolute inset-0 ink-grid opacity-50 [mask-image:radial-gradient(circle_at_center,black,transparent)]" />
 
             <div className="absolute left-1/2 top-0 -translate-x-1/2 w-[42rem] h-[42rem] rounded-full bg-accent/5 blur-[160px]" />

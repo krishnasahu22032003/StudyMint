@@ -161,7 +161,7 @@ const Hero = () => {
           </motion.div>
 
           <motion.p variants={fadeUp} className="mt-5 text-xs text-text-tertiary">
-            No credit card required &nbsp;·&nbsp; Free forever plan
+          Get Started with 50 Free Credits
           </motion.p>
         </motion.div>
       </div>

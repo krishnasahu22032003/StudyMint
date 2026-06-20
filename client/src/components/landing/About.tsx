@@ -116,7 +116,7 @@ const AboutCard = ({
 
 const About = () => {
   return (
-    <section className="relative py-32 overflow-hidden">
+    <section id="about" className="relative py-32 overflow-hidden">
       <div className="absolute inset-0 ink-grid opacity-50 [mask-image:radial-gradient(circle_at_center,black,transparent)]" />
 
       <div className="absolute right-0 top-1/2 w-[38rem] h-[38rem] rounded-full bg-gold/5 blur-[140px]" />
