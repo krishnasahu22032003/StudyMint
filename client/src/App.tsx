@@ -1,27 +1,47 @@
 import { useEffect } from 'react'
-import AuthPage from './pages/AuthPage'
 import LandingPage from './pages/LandingPage'
-import { Routes , Route } from 'react-router-dom'
+import { Routes, Route, Navigate } from 'react-router-dom'
 import getUserDetails from './lib/getuserdetails'
- 
+import { useDispatch, useSelector } from 'react-redux'
+import type { RootState } from './redux/store'
+import DashboardPage from './pages/DashboardPage'
+
 type Props = {}
 
 const App = (props: Props) => {
 
-  useEffect(()=>{
-   
-    getUserDetails() ;
-    
-  },[]);
+  const dispatch = useDispatch();
 
+  useEffect(() => {
+
+    getUserDetails(dispatch);
+
+  }, [dispatch]);
+
+  const { userData } = useSelector((state: RootState) => state.user)
 
   return (
-<>
-<Routes>
-  <Route path='/' element={<LandingPage/>}/>
-  <Route path='/auth' element={<AuthPage/>}/>
-</Routes>
-</>
+    <>
+      <Routes>
+        <Route
+          path="/"
+          element={
+            userData
+              ? <Navigate to="/dashboard" replace />
+              : <LandingPage />
+          }
+        />
+
+        <Route
+          path="/dashboard"
+          element={
+            userData
+              ? <DashboardPage />
+              : <Navigate to="/" replace />
+          }
+        />
+      </Routes>
+    </>
   )
 }
 
