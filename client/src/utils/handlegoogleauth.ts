@@ -9,6 +9,7 @@ async function handleGoogleAuth() {
         const user = response.user;
         const name = user.displayName;
         const email = user.email
+        const photoURL = user.photoURL ;
 
     } catch (error) {
         console.log(error);

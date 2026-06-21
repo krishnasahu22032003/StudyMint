@@ -5,11 +5,20 @@ const userSchema = new mongoose.Schema({
     name: {
         type: String,
         require: true,
+              trim: true,
+      minlength: 2,
+      maxlength: 100,
     },
     email: {
         type: String,
         require: true,
         unique: true,
+           lowercase: true,
+      trim: true,
+    },
+    photoURL: {
+        type: String,
+        default: "",
     },
     credits: {
         type: Number,
@@ -28,6 +37,6 @@ const userSchema = new mongoose.Schema({
 
 }, { timestamps: true });
 
-const userModel = mongoose.model("User" , userSchema);
+const userModel = mongoose.model("User", userSchema);
 
-export default userModel ;
+export default userModel;
