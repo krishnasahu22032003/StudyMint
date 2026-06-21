@@ -1,13 +1,21 @@
 import DashboardHeader from "../components/ui/DashboardHeader";
-import { useSelector } from "react-redux";
-import type { RootState } from "../redux/store";
+import { useSelector, useDispatch } from "react-redux";
+import type { AppDispatch, RootState } from "../redux/store";
+import signOutUser from "../lib/handleSignOut";
+import { useNavigate } from "react-router-dom";
 
 const DashboardPage = () => {
   const { userData } = useSelector((state: RootState) => state.user);
+  const dispatch = useDispatch<AppDispatch>();
+  const navigate = useNavigate();
 
-  const handleSignOut = () => {
+  const handleSignOut = async () => {
    
-    handleSignOut
+   await signOutUser(
+    dispatch,
+    navigate
+  );
+
   };
 
   const handleHistory = () => {
