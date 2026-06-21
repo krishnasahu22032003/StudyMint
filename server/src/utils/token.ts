@@ -1,7 +1,8 @@
 import jwt from "jsonwebtoken" ;
 import ENV_SECRETS from "../lib/ENV_SECRETS.js";
+import type { Types } from "mongoose";
 
-async function generateToken(userId : String){
+async function generateToken(userId : Types.ObjectId){
 
 const secret = ENV_SECRETS.JWT_SECRET as string ; 
 
