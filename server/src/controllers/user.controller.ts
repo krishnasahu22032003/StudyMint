@@ -16,7 +16,7 @@ export async function getCurrentUser(req: Request, res: Response) {
 
         const userId = req.userId;
 
-        const user = await userModel.findById({ userId });
+        const user = await userModel.findById(userId);
 
         if (!user) {
             return res.status(400).json({
