@@ -13,6 +13,10 @@ const DashboardPage = () => {
     // navigate("/")
   };
 
+  const handleHistory = () => {
+    console.log("handle history")
+  }
+
   const handleBuyCredits = () => {
     console.log("Buy credits clicked");
   };
@@ -26,6 +30,7 @@ const DashboardPage = () => {
         credits={userData.credits}
         onSignOut={handleSignOut}
         onBuyCredits={handleBuyCredits}
+        onHistory={handleHistory}
       />
     </div>
   );

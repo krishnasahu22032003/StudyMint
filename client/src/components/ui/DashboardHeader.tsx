@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { Menu, X, LogOut, Plus, Gem, ChevronDown, Sun, Moon } from "lucide-react";
+import { LogOut, Plus, Gem, ChevronDown, Sun, Moon, History } from "lucide-react";
 import { useTheme } from "../../context/ThemeContext";
 
 interface DashboardHeaderProps {
@@ -8,10 +8,11 @@ interface DashboardHeaderProps {
   credits: number;
   onSignOut: () => void;
   onBuyCredits?: () => void;
+  onHistory?: () => void;
 }
 
 const Logo = () => (
-  <a href="/" className="relative flex items-center gap-3 group shrink-0">
+  <div className="relative flex items-center gap-3 group shrink-0">
     <span className="absolute -left-3 -top-3 w-14 h-14 rounded-full bg-gold/20 blur-2xl opacity-0 scale-75 transition-all duration-700 group-hover:opacity-100 group-hover:scale-110" />
     <span className="relative flex items-center justify-center w-10 h-10 lg:w-11 lg:h-11 rounded-2xl bg-surface border border-border/80 backdrop-blur-xl shadow-soft overflow-hidden transition-all duration-500 group-hover:scale-105 group-hover:border-accent/40">
       <svg viewBox="0 0 40 40" fill="none" className="w-6 h-6 lg:w-7 lg:h-7 transition-transform duration-700 group-hover:rotate-6">
@@ -43,7 +44,7 @@ const Logo = () => (
         Mint
       </span>
     </div>
-  </a>
+  </div>
 );
 
 const ThemeToggle = ({ className = "" }: { className?: string }) => {
@@ -90,29 +91,81 @@ const CreditsPill = ({ credits, onBuyCredits }: { credits: number; onBuyCredits?
   </motion.button>
 );
 
-const SignOutControl = ({ userName, onSignOut }: { userName: string; onSignOut: () => void }) => {
+const AccountMenu = ({
+  userName,
+  onSignOut,
+  onHistory,
+}: {
+  userName: string;
+  onSignOut: () => void;
+  onHistory?: () => void;
+}) => {
+  const [open, setOpen] = useState(false);
+  const ref = useRef<HTMLDivElement>(null);
   const initial = userName?.trim()?.charAt(0)?.toUpperCase() || "U";
+
+  useEffect(() => {
+    const onClick = (e: MouseEvent) => {
+      if (ref.current && !ref.current.contains(e.target as Node)) setOpen(false);
+    };
+    document.addEventListener("mousedown", onClick);
+    return () => document.removeEventListener("mousedown", onClick);
+  }, []);
+
   return (
-    <button
-      onClick={onSignOut}
-      className="relative flex items-center h-10 pl-1 pr-1 rounded-full bg-surface border border-border/80 shadow-soft cursor-pointer overflow-hidden group transition-all duration-300 hover:border-red-400/40 hover:pr-3.5"
-    >
-      <span className="flex items-center justify-center w-8 h-8 rounded-full bg-gradient-to-br from-[var(--accent)]/80 to-[var(--gold)]/80 text-white text-[13px] font-semibold font-display shrink-0">
-        {initial}
-      </span>
-      <span className="grid grid-cols-[0fr] group-hover:grid-cols-[1fr] transition-[grid-template-columns] duration-300 ease-[cubic-bezier(0.34,1.56,0.64,1)]">
-        <span className="overflow-hidden flex items-center">
-          <span className="flex items-center gap-1.5 pl-2 text-[13px] font-medium text-text-secondary group-hover:text-red-500 whitespace-nowrap transition-colors duration-300">
-            <LogOut className="w-3.5 h-3.5" strokeWidth={2} />
-            Sign out
-          </span>
+    <div className="relative" ref={ref}>
+      <button
+        onClick={() => setOpen((prev) => !prev)}
+        className="relative flex items-center gap-1.5 pl-1 pr-2.5 h-10 rounded-full bg-surface border border-border/80 shadow-soft cursor-pointer transition-colors duration-300 hover:border-accent/40"
+      >
+        <span className="flex items-center justify-center w-8 h-8 rounded-full bg-gradient-to-br from-[var(--accent)] to-[var(--gold)] text-white text-[13px] font-semibold font-display shrink-0">
+          {initial}
         </span>
-      </span>
-    </button>
+        <ChevronDown
+          className={`w-3.5 h-3.5 text-text-secondary transition-transform duration-300 ${
+            open ? "rotate-180" : "rotate-0"
+          }`}
+        />
+      </button>
+
+      <AnimatePresence>
+        {open && (
+          <motion.div
+            initial={{ opacity: 0, y: -8, scale: 0.96 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: -8, scale: 0.96 }}
+            transition={{ duration: 0.18, ease: [0.34, 1.56, 0.64, 1] }}
+            className="absolute right-0 mt-2 w-52 rounded-2xl bg-surface border border-border/80 shadow-soft backdrop-blur-2xl overflow-hidden"
+          >
+            <button
+              onClick={() => {
+                setOpen(false);
+                onHistory?.();
+              }}
+              className="w-full cursor-pointer flex items-center gap-2.5 px-4 py-3 text-[13px] font-medium text-text-primary transition-colors duration-200 hover:bg-accent/5"
+            >
+              <History className="w-4 h-4 text-text-secondary" strokeWidth={2} />
+              History
+            </button>
+            <div className="h-px bg-border/70 mx-3" />
+            <button
+              onClick={() => {
+                setOpen(false);
+                onSignOut();
+              }}
+              className="w-full cursor-pointer flex items-center gap-2.5 px-4 py-3 text-[13px] font-medium text-red-500 transition-colors duration-200 hover:bg-red-500/5"
+            >
+              <LogOut className="w-4 h-4" strokeWidth={2} />
+              Sign out
+            </button>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </div>
   );
 };
 
-const DashboardHeader = ({ userName, credits, onSignOut, onBuyCredits }: DashboardHeaderProps) => {
+const DashboardHeader = ({ userName, credits, onSignOut, onBuyCredits, onHistory }: DashboardHeaderProps) => {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
@@ -168,7 +221,7 @@ const DashboardHeader = ({ userName, credits, onSignOut, onBuyCredits }: Dashboa
           <div className="hidden md:flex items-center gap-3">
             <CreditsPill credits={credits} onBuyCredits={onBuyCredits} />
             <ThemeToggle />
-            <SignOutControl userName={userName} onSignOut={onSignOut} />
+            <AccountMenu userName={userName} onSignOut={onSignOut} onHistory={onHistory} />
           </div>
 
           <div className="md:hidden" ref={menuRef}>
@@ -257,9 +310,21 @@ const DashboardHeader = ({ userName, credits, onSignOut, onBuyCredits }: Dashboa
                     variants={itemVariants}
                     onClick={() => {
                       setOpen(false);
+                      onHistory?.();
+                    }}
+                    className="w-full cursor-pointer flex items-center gap-2.5 px-5 py-4 border-b border-border/70 text-[13px] font-medium text-text-primary transition-colors duration-200 hover:bg-accent/5"
+                  >
+                    <History className="w-4 h-4 text-text-secondary" strokeWidth={2} />
+                    History
+                  </motion.button>
+
+                  <motion.button
+                    variants={itemVariants}
+                    onClick={() => {
+                      setOpen(false);
                       onSignOut();
                     }}
-                    className="w-full flex items-center gap-2.5 px-5 py-4 text-[13px] font-medium text-red-500 transition-colors duration-200 hover:bg-red-500/5"
+                    className="w-full cursor-pointer flex items-center gap-2.5 px-5 py-4 text-[13px] font-medium text-red-500 transition-colors duration-200 hover:bg-red-500/5"
                   >
                     <LogOut className="w-4 h-4" strokeWidth={2} />
                     Sign out
