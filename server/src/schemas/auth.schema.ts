@@ -2,7 +2,6 @@ import { z } from "zod";
 
 export const googleAuthSchema = z
   .object({
-    uid: z.string().min(1, "Firebase UID is required"),
 
     email: z
       .string()
@@ -21,7 +20,5 @@ export const googleAuthSchema = z
       .url("Invalid profile image URL")
       .optional()
       .or(z.literal("")),
-
-    emailVerified: z.boolean(),
   })
   .strict();

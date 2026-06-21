@@ -1,5 +1,6 @@
 import { signInWithPopup } from "firebase/auth";
 import { auth, provider } from "./firebase";
+import axiosInstance from "./axios";
 
 async function handleGoogleAuth() {
 
@@ -10,9 +11,12 @@ async function handleGoogleAuth() {
         const name = user.displayName;
         const email = user.email
         const photoURL = user.photoURL ;
+       
+      const result = await axiosInstance.post("/api/v1/user/google-auth" ,{name , email , photoURL}) ;
+      console.log(result.data) ;
 
-    } catch (error) {
-        console.log(error);
+    } catch (error:any) {
+        console.log(error.response.data);
     };
 
 };

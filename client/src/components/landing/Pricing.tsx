@@ -1,6 +1,7 @@
 import { motion, type Variants } from "framer-motion";
 import { Sparkles, Check, Crown } from "lucide-react";
 import Button from "../ui/Button";
+import handleGoogleAuth from "../../utils/handlegoogleauth";
 
 const easeOut = [0.22, 1, 0.36, 1] as const;
 
@@ -143,6 +144,7 @@ const PricingCard = ({
                         variant={plan.featured ? "primary" : "secondary"}
                         size="lg"
                         className="w-full cursor-pointer"
+                        onClick={handleGoogleAuth}
                     >
                         Get Started
                     </Button>
