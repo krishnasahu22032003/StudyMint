@@ -3,6 +3,8 @@ import { Menu, X, Moon, Sun, Sparkles, ArrowRight } from "lucide-react";
 import { useTheme } from "../../context/ThemeContext";
 import Button from "../ui/Button";
 import handleGoogleAuth from "../../utils/handlegoogleauth";
+import { useDispatch } from "react-redux";
+import type { AppDispatch } from "../../redux/store";
 
 const navLinks = [
   { label: "Features", href: "#features" },
@@ -120,8 +122,13 @@ const ThemeToggle = ({ className = "" }: { className?: string }) => {
 };
 
 const Header = () => {
+  const dispatch = useDispatch<AppDispatch>();
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
+
+    const handleGoogleLogin = async () => {
+    await handleGoogleAuth(dispatch);
+  };
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 12);
@@ -160,7 +167,7 @@ const Header = () => {
 
             <div className="flex items-center gap-3">
               <ThemeToggle />
-              <Button variant="primary" size="md" icon={Sparkles} className="cursor-pointer" onClick={handleGoogleAuth}>
+              <Button variant="primary" size="md" icon={Sparkles} className="cursor-pointer" onClick={handleGoogleLogin}>
                 Get Started
               </Button>
             </div>
@@ -208,7 +215,7 @@ const Header = () => {
             ))}
 
             <div className="pt-4 mt-2 border-t border-border">
-              <Button variant="primary" fullWidth icon={ArrowRight} iconPosition="right" className="cursor-pointer" onClick={handleGoogleAuth}>
+              <Button variant="primary" fullWidth icon={ArrowRight} iconPosition="right" className="cursor-pointer" onClick={handleGoogleLogin}>
                 Get Started
               </Button>
             </div>

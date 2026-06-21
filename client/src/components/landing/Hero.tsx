@@ -15,6 +15,9 @@ import {
 } from "lucide-react";
 import Button from "../ui/Button";
 import handleGoogleAuth from "../../utils/handlegoogleauth";
+import { useDispatch } from "react-redux";
+import type { AppDispatch } from "../../redux/store";
+
 
 const easeOut = [0.22, 1, 0.36, 1] as const;
 
@@ -76,9 +79,14 @@ const FloatCard = ({
 );
 
 const Hero = () => {
+  const dispatch = useDispatch<AppDispatch>();
   const sectionRef = useRef<HTMLDivElement>(null);
   const mx = useMotionValue(0);
   const my = useMotionValue(0);
+
+  const handleGoogleLogin = async () => {
+  await handleGoogleAuth(dispatch);
+};
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     const rect = sectionRef.current?.getBoundingClientRect();
@@ -156,7 +164,7 @@ const Hero = () => {
             variants={fadeUp}
             className="mt-10 flex flex-col sm:flex-row items-center gap-3"
           >
-            <Button variant="primary" size="lg" icon={Sparkles} className="cursor-pointer" onClick={handleGoogleAuth}>
+            <Button variant="primary" size="lg" icon={Sparkles} className="cursor-pointer" onClick={handleGoogleLogin}>
               Generate your first note
             </Button>
           </motion.div>

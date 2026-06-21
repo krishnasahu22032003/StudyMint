@@ -2,6 +2,8 @@ import { motion, type Variants } from "framer-motion";
 import { Sparkles, Check, Crown } from "lucide-react";
 import Button from "../ui/Button";
 import handleGoogleAuth from "../../utils/handlegoogleauth";
+import { useDispatch } from "react-redux";
+import type { AppDispatch } from "../../redux/store";
 
 const easeOut = [0.22, 1, 0.36, 1] as const;
 
@@ -30,6 +32,10 @@ const fadeUp: Variants = {
     },
 };
 
+ const dispatch = useDispatch<AppDispatch>();
+   const handleGoogleLogin = async () => {
+   await handleGoogleAuth(dispatch);
+ };
 const plans = [
     {
         name: "Starter",
@@ -144,7 +150,7 @@ const PricingCard = ({
                         variant={plan.featured ? "primary" : "secondary"}
                         size="lg"
                         className="w-full cursor-pointer"
-                        onClick={handleGoogleAuth}
+                        onClick={handleGoogleLogin}
                     >
                         Get Started
                     </Button>

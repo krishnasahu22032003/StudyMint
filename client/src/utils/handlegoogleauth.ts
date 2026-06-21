@@ -1,24 +1,34 @@
 import { signInWithPopup } from "firebase/auth";
 import { auth, provider } from "./firebase";
 import axiosInstance from "./axios";
+import { setUserData } from "../redux/userSlice";
+import type { AppDispatch } from "../redux/store";
 
-async function handleGoogleAuth() {
-
+export default async function handleGoogleAuth(
+    dispatch: AppDispatch
+) {
     try {
+        const response = await signInWithPopup(
+            auth,
+            provider
+        );
 
-        const response = await signInWithPopup(auth, provider);
         const user = response.user;
-        const name = user.displayName;
-        const email = user.email
-        const photoURL = user.photoURL ;
-       
-      const result = await axiosInstance.post("/api/v1/user/google-auth" ,{name , email , photoURL}) ;
-      console.log(result.data) ;
 
-    } catch (error:any) {
-        console.log(error.response.data);
-    };
+        const result = await axiosInstance.post(
+            "/api/v1/user/google-auth",
+            {
+                name: user.displayName,
+                email: user.email,
+                photoURL: user.photoURL,
+            }
+        );
 
-};
+        dispatch(
+            setUserData(result.data.data.user)
+        );
 
-export default handleGoogleAuth;
+    } catch (error: any) {
+        console.log(error.response?.data);
+    }
+}

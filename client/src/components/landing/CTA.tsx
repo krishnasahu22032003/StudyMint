@@ -2,6 +2,8 @@ import { motion, type Variants } from "framer-motion";
 import { Sparkles, ArrowRight } from "lucide-react";
 import Button from "../ui/Button";
 import handleGoogleAuth from "../../utils/handlegoogleauth";
+import { useDispatch } from "react-redux";
+import type { AppDispatch } from "../../redux/store";
 
 const easeOut = [0.22, 1, 0.36, 1] as const;
 
@@ -31,6 +33,12 @@ const fadeUp: Variants = {
 };
 
 const CTA = () => {
+  const dispatch = useDispatch<AppDispatch>();
+
+      const handleGoogleLogin = async () => {
+      await handleGoogleAuth(dispatch);
+    };
+
   return (
     <section className="relative py-24 overflow-hidden">
       <div className="absolute inset-0 ink-grid opacity-50 [mask-image:radial-gradient(circle_at_center,black,transparent)]" />
@@ -118,7 +126,7 @@ const CTA = () => {
                   size="lg"
                   icon={ArrowRight}
                   className="min-w-[220px] cursor-pointer"
-                  onClick={handleGoogleAuth}
+                  onClick={handleGoogleLogin}
                 >
                   Get Started Free
                 </Button>
