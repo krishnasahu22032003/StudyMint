@@ -6,11 +6,8 @@ const DashboardPage = () => {
   const { userData } = useSelector((state: RootState) => state.user);
 
   const handleSignOut = () => {
-    console.log("Sign out clicked");
-
-    // call logout API
-    // dispatch(clearUserData())
-    // navigate("/")
+   
+    handleSignOut
   };
 
   const handleHistory = () => {

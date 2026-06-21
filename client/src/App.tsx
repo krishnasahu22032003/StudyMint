@@ -5,6 +5,7 @@ import getUserDetails from './lib/getuserdetails'
 import { useDispatch, useSelector } from 'react-redux'
 import type { RootState } from './redux/store'
 import DashboardPage from './pages/DashboardPage'
+import { Toaster } from "sonner";
 
 type Props = {}
 
@@ -22,6 +23,7 @@ const App = (props: Props) => {
 
   return (
     <>
+    <Toaster richColors position='top-center'/>
       <Routes>
         <Route
           path="/"
