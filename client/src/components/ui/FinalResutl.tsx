@@ -9,7 +9,7 @@ import {
   ChartColumn,
   CircleHelp,
 } from "lucide-react";
-import Button from "./ui/Button";
+import Button from "./Button";
 import MermaidSetup from "./MermaidSetup";
 import RechartSetUp from "./RechartSetUp";
 import { downloadPdf } from "../services/api";
