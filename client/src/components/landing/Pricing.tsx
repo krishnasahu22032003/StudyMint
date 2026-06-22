@@ -32,10 +32,7 @@ const fadeUp: Variants = {
     },
 };
 
- const dispatch = useDispatch<AppDispatch>();
-   const handleGoogleLogin = async () => {
-   await handleGoogleAuth(dispatch);
- };
+
 const plans = [
     {
         name: "Starter",
@@ -81,8 +78,10 @@ const plans = [
 
 const PricingCard = ({
     plan,
+      onLogin,
 }: {
     plan: (typeof plans)[0];
+    onLogin: () => void;
 }) => {
     return (
         <motion.div
@@ -150,7 +149,7 @@ const PricingCard = ({
                         variant={plan.featured ? "primary" : "secondary"}
                         size="lg"
                         className="w-full cursor-pointer"
-                        onClick={handleGoogleLogin}
+                        onClick={onLogin}
                     >
                         Get Started
                     </Button>
@@ -180,6 +179,12 @@ const PricingCard = ({
 };
 
 const Pricing = () => {
+
+   const dispatch = useDispatch<AppDispatch>();
+   const handleGoogleLogin = async () => {
+   await handleGoogleAuth(dispatch);
+ };
+
     return (
         <section id="pricing" className="relative py-32 overflow-hidden">
             <div className="absolute inset-0 ink-grid opacity-50 [mask-image:radial-gradient(circle_at_center,black,transparent)]" />
@@ -231,6 +236,7 @@ const Pricing = () => {
                                 <PricingCard
                                     key={plan.name}
                                     plan={plan}
+                                    onLogin={handleGoogleLogin}
                                 />
                             ))
                         }
