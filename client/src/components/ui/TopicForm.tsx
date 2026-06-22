@@ -6,6 +6,7 @@ import { useDispatch } from "react-redux";
 import { updateCredits } from "../../redux/userSlice";
 import type { NotesResult } from "../../types/notes";
 import { Sparkles, ChevronDown, ChevronUp } from "lucide-react";
+import { toast } from "sonner";
 
 export type GenerateNotesParams = {
   setResult: React.Dispatch<React.SetStateAction<NotesResult | null>>;
@@ -29,10 +30,15 @@ const TopicForm = ({ setResult, setLoading, loading, setError }: GenerateNotesPa
   const dispatch = useDispatch();
 
   async function handleSubmit() {
-    if (!topic.trim()) {
-      setError("Please enter a topic to generate notes.");
-      return;
-    }
+   if (!topic.trim()) {
+  const message = "Please enter a topic";
+
+  setError(message);
+
+  toast.error(message);
+
+  return;
+}
     setError("");
     setLoading(true);
     setResult(null);
@@ -45,7 +51,12 @@ const TopicForm = ({ setResult, setLoading, loading, setError }: GenerateNotesPa
         includeDiagram,
         includeChart,
       });
+      console.log("FULL RESPONSE:", result);
+console.log("NOTES DATA:", result.data);
       setResult(result.data);
+      toast.success(
+  `Notes generated successfully. ${result.creditsLeft} credits remaining`
+);
       setLoading(false);
       setClassLevel("");
       setTopic("");
@@ -59,7 +70,9 @@ const TopicForm = ({ setResult, setLoading, loading, setError }: GenerateNotesPa
       }
     } catch (error) {
       console.log(error);
-      setError("Failed to generate notes. Please try again.");
+      const message =error instanceof Error? error.message: "Failed to generate notes";
+      setError(message);
+      toast.error(message);
       setLoading(false);
     }
   }

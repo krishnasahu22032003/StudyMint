@@ -33,7 +33,7 @@ export default async function createNotes(payload: GenerateNotesPayload): Promis
         return response.data;
 
     } catch (error: any) {
-        console.error(error?.response?.data?.message || "Generate Failed");
+        console.error(error?.response?.data?.message || "Failed To Generate Notes");
         throw error
     };
 

@@ -142,7 +142,7 @@ function FinalResult({ result }: FinalResultProps) {
             whileHover={{ y: -1, transition: { duration: 0.2 } }}
             whileTap={{ scale: 0.97 }}
             onClick={() => setQuickRevision(!quickRevision)}
-            className={`inline-flex items-center gap-2 rounded-xl px-4 py-2.5 text-sm font-semibold transition-all duration-200 ${
+            className={`inline-flex cursor-pointer items-center gap-2 rounded-xl px-4 py-2.5 text-sm font-semibold transition-all duration-200 ${
               quickRevision
                 ? "bg-accent text-white shadow-soft"
                 : "bg-surface border border-border text-text-secondary hover:text-text-primary hover:border-accent/30"
@@ -155,7 +155,7 @@ function FinalResult({ result }: FinalResultProps) {
             whileHover={{ y: -1, transition: { duration: 0.2 } }}
             whileTap={{ scale: 0.97 }}
             onClick={() => downloadPdf(result)}
-            className="inline-flex items-center gap-2 rounded-xl bg-accent px-4 py-2.5 text-sm font-semibold text-white shadow-soft hover:bg-accent/90 transition-colors duration-200"
+            className="inline-flex cursor-pointer items-center gap-2 rounded-xl bg-accent px-4 py-2.5 text-sm font-semibold text-white shadow-soft hover:bg-accent/90 transition-colors duration-200"
           >
             <Download className="w-4 h-4" />
             Download PDF

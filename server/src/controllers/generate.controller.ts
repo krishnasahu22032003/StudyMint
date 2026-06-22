@@ -85,7 +85,7 @@ export async function generateNotes(req: Request, res: Response) {
         return res.status(200).json({
             success: true,
             message: "Notes generated",
-            ata: aiResponse,
+            data: aiResponse,
             noteId: notes._id,
             creditsLeft: user.credits
         })
