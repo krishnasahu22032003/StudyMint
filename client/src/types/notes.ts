@@ -25,3 +25,31 @@ export type NotesResult = {
     }[];
   }[];
 };
+
+export type ChartData = {
+  name: string;
+  value: number;
+};
+
+export type NoteHistoryItem = {
+  _id: string;
+  topic: string;
+  classLevel?: string;
+  examType?: string;
+  revisionMode: boolean;
+  includeDiagram: boolean;
+  includeChart: boolean;
+  createdAt: string;
+};
+
+export type SingleNote = {
+  _id: string;
+  topic: string;
+  classLevel?: string;
+  examType?: string;
+  revisionMode: boolean;
+  includeDiagram: boolean;
+  includeChart: boolean;
+  createdAt: string;
+  content: NotesResult;
+};
