@@ -29,6 +29,7 @@ export default async function createNotes(payload: GenerateNotesPayload): Promis
     try {
 
         const response = await axiosInstance.post<GeneratedNotesResponse>("/api/v1/notes/generate-notes", payload);
+        console.log(response.data)
         return response.data;
 
     } catch (error: any) {

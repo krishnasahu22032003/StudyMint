@@ -1,6 +1,9 @@
 import { motion } from "framer-motion";
 import { useState } from "react";
 import type { Dispatch, SetStateAction } from "react";
+import createNotes from "../../lib/createNotes";
+import { useDispatch } from 'react-redux';
+import { updateCredits } from "../../redux/userSlice";
 
 export type GenerateNotesParams = {
   setResult: Dispatch<SetStateAction<string | null>>;
@@ -17,7 +20,48 @@ const TopicForm = ({ setResult, setLoading, loading, setError, }: GenerateNotesP
   const [revisionMode, setRevisionMode] = useState(false);
   const [includeDiagram, setIncludeDiagram] = useState(false);
   const [includeChart, setIncludeChart] = useState(false);
+    const [progress, setProgress] = useState(0);
+  const [progressText, setProgressText] = useState("");
+   const dispatch = useDispatch()
 
+  async function handleSubmit() {
+
+    if (!topic.trim()) {
+      setError("Please enter the topic")
+      return;
+    }
+    setError("")
+    setLoading(true)
+    setResult(null)
+    try {
+
+      const result = await createNotes({topic,
+        classLevel,
+        examType,
+        revisionMode,
+        includeDiagram,
+        includeChart})
+        setResult(result.data)
+        setLoading(false)
+        setClassLevel("")
+        setTopic("")
+        setExamType("")
+        setIncludeChart(false)
+        setRevisionMode(false)
+        setIncludeDiagram(false)
+
+        if(typeof result.creditsLeft === "number"){
+          dispatch(updateCredits(result.creditsLeft));
+
+        }
+
+
+    } catch (error) {
+   console.log(error)
+   setError("Failed to fetch notes from server");
+      setLoading(false)
+    }
+  }
   return (
     <motion.div
       initial={{ opacity: 0, y: 30 }}
@@ -211,17 +255,17 @@ const TopicForm = ({ setResult, setLoading, loading, setError, }: GenerateNotesP
             </div>
           </div>
           <motion.div className="mt-6">
-  <motion.button
-    onClick={handleSubmit}
-    disabled={loading}
-    whileHover={!loading ? { y: -2 } : {}}
-    whileTap={!loading ? { scale: 0.98 } : {}}
-    transition={{
-      type: "spring",
-      stiffness: 350,
-      damping: 22,
-    }}
-    className={`
+            <motion.button
+              onClick={handleSubmit}
+              disabled={loading}
+              whileHover={!loading ? { y: -2 } : {}}
+              whileTap={!loading ? { scale: 0.98 } : {}}
+              transition={{
+                type: "spring",
+                stiffness: 350,
+                damping: 22,
+              }}
+              className={`
       relative
       w-full
       overflow-hidden
@@ -234,29 +278,28 @@ const TopicForm = ({ setResult, setLoading, loading, setError, }: GenerateNotesP
       gap-3
       transition-all
       duration-300
-      ${
-        loading
-          ? "bg-surface border border-border text-text-secondary cursor-not-allowed"
-          : "bg-accent text-white shadow-soft hover:shadow-elevated"
-      }
+      ${loading
+                  ? "bg-surface border border-border text-text-secondary cursor-not-allowed"
+                  : "bg-accent text-white shadow-soft hover:shadow-elevated"
+                }
     `}
-  >
-    {!loading && (
-      <span className="absolute inset-0 overflow-hidden rounded-[inherit]">
-        <span className="absolute inset-y-0 -left-1/2 w-1/2 -skew-x-12 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-[120%] group-hover:translate-x-[420%] transition-transform duration-700" />
-      </span>
-    )}
+            >
+              {!loading && (
+                <span className="absolute inset-0 overflow-hidden rounded-[inherit]">
+                  <span className="absolute inset-y-0 -left-1/2 w-1/2 -skew-x-12 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-[120%] group-hover:translate-x-[420%] transition-transform duration-700" />
+                </span>
+              )}
 
-    <span className="relative z-10">
-      {loading ? "Generating Notes..." : "Generate Notes"}
-    </span>
-  </motion.button>
+              <span className="relative z-10">
+                {loading ? "Generating Notes..." : "Generate Notes"}
+              </span>
+            </motion.button>
 
-  {loading && (
-    <motion.div
-      initial={{ opacity: 0, y: 10 }}
-      animate={{ opacity: 1, y: 0 }}
-      className="
+            {loading && (
+              <motion.div
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="
         mt-6
         rounded-2xl
         border
@@ -264,39 +307,39 @@ const TopicForm = ({ setResult, setLoading, loading, setError, }: GenerateNotesP
         bg-bg
         p-5
       "
-    >
-      <div className="mb-3 flex items-center justify-between">
-        <span className="text-sm font-medium text-text-primary">
-          {progressText}
-        </span>
+              >
+                <div className="mb-3 flex items-center justify-between">
+                  <span className="text-sm font-medium text-text-primary">
+                    {progressText}
+                  </span>
 
-        <span className="text-sm font-semibold text-accent">
-          {progress}%
-        </span>
-      </div>
+                  <span className="text-sm font-semibold text-accent">
+                    {progress}%
+                  </span>
+                </div>
 
-      <div className="h-2 overflow-hidden rounded-full bg-surface">
-        <motion.div
-          initial={{ width: 0 }}
-          animate={{ width: `${progress}%` }}
-          transition={{
-            duration: 0.5,
-            ease: "easeOut",
-          }}
-          className="
+                <div className="h-2 overflow-hidden rounded-full bg-surface">
+                  <motion.div
+                    initial={{ width: 0 }}
+                    animate={{ width: `${progress}%` }}
+                    transition={{
+                      duration: 0.5,
+                      ease: "easeOut",
+                    }}
+                    className="
             h-full
             rounded-full
             bg-accent
           "
-        />
-      </div>
+                  />
+                </div>
 
-      <p className="mt-4 text-center text-xs leading-relaxed text-text-secondary">
-        This may take up to 2–5 minutes. Please don't close or refresh the page.
-      </p>
-    </motion.div>
-  )}
-</motion.div>
+                <p className="mt-4 text-center text-xs leading-relaxed text-text-secondary">
+                  This may take up to 2–5 minutes. Please don't close or refresh the page.
+                </p>
+              </motion.div>
+            )}
+          </motion.div>
         </motion.div>
       </div>
     </motion.div>
