@@ -12,6 +12,7 @@
   "type": "module",
   "devDependencies": {
     "@types/node": "^26.0.0",
+    "@types/pdfkit": "^0.17.6",
     "ts-node": "^10.9.2",
     "typescript": "^6.0.3"
   },
