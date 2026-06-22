@@ -10,6 +10,9 @@ import DashboardPage from "./pages/DashboardPage";
 
 import getUserDetails from "./lib/getuserdetails";
 import AppLayout from "./layouts/AppLayout";
+import HistoryPage from "./pages/HistoryPage";
+import NotesPage from "./pages/NotesPage";
+import PricingPage from "./pages/PricingPage";
 
 type Props = {};
 
@@ -52,6 +55,45 @@ const App = (props: Props) => {
             element={
               userData ? (
                 <DashboardPage />
+              ) : (
+                <Navigate
+                  to="/"
+                  replace
+                />
+              )
+            }
+          />
+          <Route
+            path="/history"
+            element={
+              userData ? (
+                <HistoryPage />
+              ) : (
+                <Navigate
+                  to="/"
+                  replace
+                />
+              )
+            }
+          />
+          <Route
+            path="/notes"
+            element={
+              userData ? (
+                <NotesPage />
+              ) : (
+                <Navigate
+                  to="/"
+                  replace
+                />
+              )
+            }
+          />
+          <Route
+            path="/pricing"
+            element={
+              userData ? (
+                <PricingPage />
               ) : (
                 <Navigate
                   to="/"

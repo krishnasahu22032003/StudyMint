@@ -3,8 +3,8 @@ import {
   Sparkles,
   BookOpen,
   FolderOpen,
-  AudioLines,
   ChartNoAxesColumn,
+  FileText,
 } from "lucide-react";
 import DashboardHeader from "../components/ui/DashboardHeader";
 import { useSelector, useDispatch } from "react-redux";
@@ -12,8 +12,6 @@ import type { AppDispatch, RootState } from "../redux/store";
 import signOutUser from "../lib/handleSignOut";
 import { useNavigate } from "react-router-dom";
 import Button from "../components/ui/Button";
-
-const easeOut = [0.22, 1, 0.36, 1] as const;
 
 const container: Variants = {
   hidden: {},
@@ -63,12 +61,12 @@ const DashboardPage = () => {
   };
 
   const handleHistory = () => {
-    console.log("handle history");
+    navigate("/history")
   };
 
   const handleBuyCredits = () => {
-    console.log("Buy credits clicked");
-  };
+   navigate("/pricing");
+  }
 
   if (!userData) return null;
 
@@ -253,7 +251,7 @@ transition={{
   </motion.button>
 
   <motion.button
-    onClick={() => navigate("/record")}
+    onClick={() => navigate("/notes")}
  whileHover={{
   y: -8,
   scale: 1.02,
@@ -278,17 +276,17 @@ transition={{
         will-change-transform
     "
   >
-    <div className="w-12 h-12 rounded-xl bg-accent-soft flex items-center justify-center mb-4">
-      <AudioLines className="w-5 h-5 text-accent" />
-    </div>
+ <div className="w-12 h-12 rounded-xl bg-accent-soft flex items-center justify-center mb-4">
+  <FileText className="w-5 h-5 text-accent" />
+</div>
 
-    <h3 className="font-semibold text-text-primary">
-      Audio Notes
-    </h3>
+<h3 className="font-semibold text-text-primary">
+  AI Summaries
+</h3>
 
-    <p className="mt-2 text-sm text-text-secondary leading-relaxed">
-      Convert lectures and recordings into structured notes.
-    </p>
+<p className="mt-2 text-sm text-text-secondary leading-relaxed">
+  Get concise summaries that highlight the most important concepts instantly.
+</p>
   </motion.button>
 
   <motion.button
