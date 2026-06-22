@@ -3,6 +3,7 @@ import startServer from "./lib/startServer.js";
 import UserRouter from "./routes/AuthRoutes.js";
 import cookieParser from "cookie-parser";
 import cors from  "cors" ;
+import NotesRouter from "./routes/NotesRoutes.js";
 
 const app = express() ;
 
@@ -14,6 +15,7 @@ app.use(cors({
 })); 
 
 app.use("/api/v1/user" , UserRouter) ;
-app.use("/api/v1/notes")
+app.use("/api/v1/notes" , NotesRouter) ;
+app.use("/api/v1/pdf")
 
 startServer(app) ;
