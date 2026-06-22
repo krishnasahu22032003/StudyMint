@@ -4,9 +4,12 @@ import type { Dispatch, SetStateAction } from "react";
 import createNotes from "../../lib/createNotes";
 import { useDispatch } from 'react-redux';
 import { updateCredits } from "../../redux/userSlice";
+import type { NotesResult } from "../../types/notes";
 
 export type GenerateNotesParams = {
-  setResult: Dispatch<SetStateAction<string | null>>;
+  setResult: React.Dispatch<
+  React.SetStateAction<NotesResult | null>
+>;
   setLoading: Dispatch<SetStateAction<boolean>>;
   setError: Dispatch<SetStateAction<string>>;
   loading: boolean;

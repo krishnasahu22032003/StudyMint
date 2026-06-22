@@ -9,13 +9,14 @@ import { BookOpen } from 'lucide-react';
 import { motion } from "framer-motion";
 import Sidebar from '../components/ui/SideBar';
 import FinalResult from '../components/ui/FinalResutl';
+import type{ NotesResult } from '../types/notes';
 
 type Props = {}
 
 const NotesPage = (props: Props) => {
 
     const [loading, setLoading] = useState(false)
-    const [result, setResult] = useState<string | null>(null)
+    const [result, setResult] = useState<NotesResult | null>(null)
     const [error, setError] = useState("")
     const { userData } = useSelector((state: RootState) => state.user);
     const dispatch = useDispatch<AppDispatch>();
