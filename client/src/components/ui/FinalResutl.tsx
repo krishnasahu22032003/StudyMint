@@ -12,7 +12,47 @@ import {
 import Button from "./Button";
 import MermaidSetup from "./MermaidSetup";
 import RechartSetUp from "./RechartSetUp";
-import { downloadPdf } from "../services/api";
+import { downloadPdf } from "../../lib/downloadPdf";
+
+type SubTopics = {
+  "⭐": string[];
+  "⭐⭐": string[];
+  "⭐⭐⭐": string[];
+};
+
+type Questions = {
+  short: string[];
+  long: string[];
+  diagram: string;
+};
+
+type ChartData = {
+  name: string;
+  value: number;
+};
+
+type Chart = {
+  type: "bar" | "line" | "pie";
+  title: string;
+  data: ChartData[];
+};
+
+type NotesResult = {
+  subTopics: SubTopics;
+  importance: string;
+  notes: string;
+  revisionPoints: string[];
+  questions: Questions;
+  diagram: {
+    type: string;
+    data: string;
+  };
+  charts: Chart[];
+};
+
+type FinalResultProps = {
+  result: NotesResult;
+};
 
 const markDownComponent = {
   h1: ({ children }: any) => (
@@ -50,7 +90,7 @@ const markDownComponent = {
   ),
 };
 
-function FinalResult({ result }) {
+function FinalResult({ result }: FinalResultProps) {
   const [quickRevision, setQuickRevision] = useState(false);
 
   if (
