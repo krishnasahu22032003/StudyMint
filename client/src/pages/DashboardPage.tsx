@@ -19,8 +19,8 @@ const container: Variants = {
   hidden: {},
   show: {
     transition: {
-      staggerChildren: 0.09,
-      delayChildren: 0.1,
+    staggerChildren: 0.18,
+delayChildren: 0.2,
     },
   },
 };
@@ -28,14 +28,18 @@ const container: Variants = {
 const fadeUp: Variants = {
   hidden: {
     opacity: 0,
-    y: 24,
+    y: 50,
+    scale: 0.98,
+    filter: "blur(8px)",
   },
   show: {
     opacity: 1,
     y: 0,
+    scale: 1,
+    filter: "blur(0px)",
     transition: {
-      duration: 0.75,
-      ease: easeOut,
+      duration: 0.9,
+      ease: [0.22, 1, 0.36, 1],
     },
   },
 };
@@ -113,13 +117,15 @@ const DashboardPage = () => {
           </motion.div>
           <motion.div
             variants={fadeUp}
-            whileHover={{
-              y: -6,
-              scale: 1.01,
-            }}
-            transition={{
-              duration: 0.3,
-            }}
+           whileHover={{
+  y: -8,
+}}
+
+transition={{
+  type: "spring",
+  stiffness: 220,
+  damping: 22,
+}}
             className="
     relative
     overflow-hidden
@@ -129,7 +135,7 @@ const DashboardPage = () => {
     bg-surface
     p-8
     md:p-8
-shadow-soft hover:shadow-elevated
+shadow-soft hover:shadow-elevated will-change-transform
   "
           >
              <div className="absolute inset-0 bg-gradient-to-br from-accent/10 via-transparent to-transparent" />
@@ -171,11 +177,15 @@ shadow-soft hover:shadow-elevated
   <motion.button
     onClick={() => navigate("/notes")}
     whileHover={{
-      y: -10,
-      scale: 1.03,
-      rotateX: 4,
-      rotateY: -4,
-    }}
+  y: -8,
+  scale: 1.02,
+}}
+
+transition={{
+  type: "spring",
+  stiffness: 250,
+  damping: 20,
+}}
     className="
       rounded-2xl
       border
@@ -185,10 +195,9 @@ shadow-soft hover:shadow-elevated
       shadow-soft
       text-left
       cursor-pointer
-      transition-all
-      duration-300
       hover:border-accent/30
       hover:shadow-elevated
+        will-change-transform
     "
   >
     <div className="w-12 h-12 rounded-xl bg-accent-soft flex items-center justify-center mb-4">
@@ -206,12 +215,16 @@ shadow-soft hover:shadow-elevated
 
   <motion.button
     onClick={() => navigate("/notes")}
-    whileHover={{
-      y: -10,
-      scale: 1.03,
-      rotateX: 4,
-      rotateY: -4,
-    }}
+   whileHover={{
+  y: -8,
+  scale: 1.02,
+}}
+
+transition={{
+  type: "spring",
+  stiffness: 250,
+  damping: 20,
+}}
     className="
       rounded-2xl
       border
@@ -221,10 +234,9 @@ shadow-soft hover:shadow-elevated
       shadow-soft
       text-left
       cursor-pointer
-      transition-all
-      duration-300
       hover:border-accent/30
       hover:shadow-elevated
+        will-change-transform
     "
   >
     <div className="w-12 h-12 rounded-xl bg-accent-soft flex items-center justify-center mb-4">
@@ -242,12 +254,16 @@ shadow-soft hover:shadow-elevated
 
   <motion.button
     onClick={() => navigate("/record")}
-    whileHover={{
-      y: -10,
-      scale: 1.03,
-      rotateX: 4,
-      rotateY: -4,
-    }}
+ whileHover={{
+  y: -8,
+  scale: 1.02,
+}}
+
+transition={{
+  type: "spring",
+  stiffness: 250,
+  damping: 20,
+}}
     className="
       rounded-2xl
       border
@@ -257,10 +273,9 @@ shadow-soft hover:shadow-elevated
       shadow-soft
       text-left
       cursor-pointer
-      transition-all
-      duration-300
       hover:border-accent/30
       hover:shadow-elevated
+        will-change-transform
     "
   >
     <div className="w-12 h-12 rounded-xl bg-accent-soft flex items-center justify-center mb-4">
@@ -278,12 +293,16 @@ shadow-soft hover:shadow-elevated
 
   <motion.button
     onClick={() => navigate("/notes")}
-    whileHover={{
-      y: -10,
-      scale: 1.03,
-      rotateX: 4,
-      rotateY: -4,
-    }}
+  whileHover={{
+  y: -8,
+  scale: 1.02,
+}}
+
+transition={{
+  type: "spring",
+  stiffness: 250,
+  damping: 20,
+}}
     className="
       rounded-2xl
       border
@@ -293,10 +312,9 @@ shadow-soft hover:shadow-elevated
       shadow-soft
       text-left
       cursor-pointer
-      transition-all
-      duration-300
       hover:border-accent/30
       hover:shadow-elevated
+        will-change-transform
     "
   >
     <div className="w-12 h-12 rounded-xl bg-accent-soft flex items-center justify-center mb-4">
@@ -315,15 +333,21 @@ shadow-soft hover:shadow-elevated
           <motion.div
             variants={fadeUp}
             onClick={handleBuyCredits}
+             whileHover={{
+    y: -6,
+  }}
+  transition={{
+    type: "spring",
+    stiffness: 220,
+    damping: 20,
+  }}
             className="
               cursor-pointer
               rounded-3xl
               overflow-hidden
               p-8
-              transition-all
-              duration-300
-              hover:-translate-y-1
               hover:shadow-2xl
+               will-change-transform
             "
             style={{
               background:
