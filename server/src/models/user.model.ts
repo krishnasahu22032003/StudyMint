@@ -25,7 +25,7 @@ const userSchema = new mongoose.Schema({
         default: 50,
         minimum: 0
     },
-    isCreditAvaliable: {
+    isCreditAvailable: {
         type: Boolean,
         default: true,
     },
