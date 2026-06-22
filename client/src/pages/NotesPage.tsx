@@ -8,6 +8,7 @@ import { useState } from 'react';
 import { BookOpen } from 'lucide-react';
 import { motion } from "framer-motion";
 import Sidebar from '../components/ui/SideBar';
+import FinalResult from '../components/ui/FinalResutl';
 
 type Props = {}
 
