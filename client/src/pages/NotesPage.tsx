@@ -5,8 +5,9 @@ import type { AppDispatch, RootState } from '../redux/store';
 import signOutUser from "../lib/handleSignOut";
 import TopicForm from '../components/ui/TopicForm';
 import { useState } from 'react';
-import { BookOpen, Sidebar } from 'lucide-react';
+import { BookOpen } from 'lucide-react';
 import { motion } from "framer-motion";
+import Sidebar from '../components/ui/SideBar';
 
 type Props = {}
 
