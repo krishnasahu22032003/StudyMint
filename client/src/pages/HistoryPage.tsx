@@ -262,34 +262,10 @@ const HistoryPage = () => {
                         <div className="relative rounded-3xl border border-border bg-surface shadow-soft min-h-[calc(100vh-14rem)]">
                             <div className="absolute inset-0 bg-gradient-to-br from-accent/4 via-transparent to-gold/4 pointer-events-none" />
 
-                          {!sidebarOpen && (
+{!sidebarOpen && (
   <button
-    onClick={() => {
-      console.log("OPEN SIDEBAR");
-      setSidebarOpen(true);
-    }}
-    className="
-      fixed
-      top-58
-      left-4
-      z-[9999]
-      flex
-      items-center
-      gap-2
-      rounded-xl
-      border
-      border-border
-      bg-surface
-      px-3
-      py-2
-      text-xs
-      font-medium
-      text-text-secondary
-      hover:text-text-primary
-      hover:border-accent/30
-      shadow-elevated
-      cursor-pointer
-    "
+    onClick={() => setSidebarOpen(true)}
+    className="absolute left-5 z-20 flex items-center gap-2 rounded-xl border border-border bg-surface px-3 py-2 text-xs font-medium text-text-secondary hover:text-text-primary hover:border-accent/30 shadow-elevated cursor-pointer transition-colors duration-200"
   >
     <PanelLeftOpen className="w-3.5 h-3.5" />
     Notes
