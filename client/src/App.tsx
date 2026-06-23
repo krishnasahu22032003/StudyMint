@@ -3,18 +3,19 @@ import { Routes, Route, Navigate } from "react-router-dom";
 import { Toaster } from "sonner";
 import { useDispatch, useSelector } from "react-redux";
 import PaymentSuccess from "./pages/PaymentSuccess";
-
 import type { RootState } from "./redux/store";
-
 import LandingPage from "./pages/LandingPage";
 import DashboardPage from "./pages/DashboardPage";
-
 import getUserDetails from "./lib/getuserdetails";
 import AppLayout from "./layouts/AppLayout";
 import HistoryPage from "./pages/HistoryPage";
 import NotesPage from "./pages/NotesPage";
 import PricingPage from "./pages/PricingPage";
 import PaymentFailed from "./pages/PaymenFailed";
+import PrivacyPolicy from "./pages/PrivacyPolicy";
+import TermsAndConditions from "./pages/TermsAndConditions";
+import RefundPolicy from "./pages/RefundPolicy";
+import ContactPage from "./pages/ContactPage";
 
 type Props = {};
 
@@ -116,22 +117,22 @@ const App = (props: Props) => {
 
         <Route
   path="/privacy-policy"
-  element={<PrivacyPolicy />}
+  element={<PrivacyPolicy/>}
 />
 
 <Route
   path="/terms-and-conditions"
-  element={<TermsAndConditions />}
+  element={<TermsAndConditions/>}
 />
 
 <Route
   path="/refund-policy"
-  element={<RefundPolicy />}
+  element={<RefundPolicy/>}
 />
 
 <Route
   path="/contact"
-  element={<ContactPage />}
+  element={<ContactPage/>}
 />
 
       </Routes>
