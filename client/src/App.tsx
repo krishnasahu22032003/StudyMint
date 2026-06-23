@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
 import { Toaster } from "sonner";
 import { useDispatch, useSelector } from "react-redux";
+import PaymentSuccess from "./pages/PaymentSuccess";
 
 import type { RootState } from "./redux/store";
 
@@ -105,9 +106,13 @@ const App = (props: Props) => {
           />
         </Route>
         <Route
-  path="/payment-failed"
-  element={<PaymentFailed />}
-/>
+          path="/payment-failed"
+          element={<PaymentFailed />}
+        />
+        <Route
+          path="/payment-success"
+          element={<PaymentSuccess />}
+        />
       </Routes>
     </>
   );

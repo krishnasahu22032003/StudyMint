@@ -87,7 +87,7 @@ function PaymentFailed() {
               </button>
 
               <button
-                onClick={() => navigate("/")}
+                onClick={() => navigate("/dashboard")}
                 className="flex-1 cursor-pointer rounded-2xl border border-border bg-surface px-4 py-3 text-sm font-semibold text-text-primary transition-all hover:border-accent/30"
               >
                 <span className="flex items-center justify-center gap-2">
