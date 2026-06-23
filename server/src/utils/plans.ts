@@ -13,4 +13,4 @@ export const CREDIT_PLANS = {
     amount: 999,
     credits: 999,
   },
-};
+} as const ; 
