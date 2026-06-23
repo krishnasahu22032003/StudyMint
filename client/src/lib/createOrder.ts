@@ -15,8 +15,13 @@ export type CreateOrderResponse = {
   };
 };
 
+export type PlanType =
+| "starter"
+| "pro"
+| "premium"
+
 export default async function createOrder(
-  plan: "starter" | "pro" | "premium"
+  plan:PlanType
 ): Promise<CreateOrderResponse> {
   try {
     const response =

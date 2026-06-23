@@ -10,7 +10,7 @@ export const CREDIT_PLANS = {
   },
 
   premium: {
-    amount: 999,
-    credits: 999,
+    amount: 499,
+    credits: 499,
   },
 } as const ; 

@@ -1,10 +1,11 @@
+import ENV_SECRETS from "../utils/ENV_SECRETS";
 import createOrder from "./createOrder";
 import verifyPayment from "./verifyPayment";
 
 type PlanType =
   | "starter"
-  | "popular"
-  | "pro";
+| "pro"
+| "premium"
 
 export default async function handlePaying(
   plan: PlanType
@@ -13,8 +14,7 @@ export default async function handlePaying(
     await createOrder(plan);
 
   const options = {
-    key: import.meta.env
-      .VITE_RAZORPAY_KEY_ID,
+    key: ENV_SECRETS.RAZOR_PAY_KEY,
 
     amount: order.amount,
 

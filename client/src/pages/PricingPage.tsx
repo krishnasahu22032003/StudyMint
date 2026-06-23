@@ -3,6 +3,10 @@ import { useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { Check, Zap, Star, Sparkles, ArrowRight, ArrowLeft } from "lucide-react";
 import handlePaying from "../lib/handlePaying";
+import DashboardHeader from "../components/ui/DashboardHeader";
+import signOutUser from "../lib/handleSignOut";
+import { useDispatch, useSelector } from "react-redux";
+import type { AppDispatch, RootState } from "../redux/store";
 
 const easeOut = [0.22, 1, 0.36, 1] as const;
 
@@ -29,56 +33,63 @@ interface PricingPlan {
 }
 
 const plans: PricingPlan[] = [
-    {
-        id: "starter",
-        title: "Starter",
-        price: "₹100",
-        amount: 100,
-        credits: "50 credits",
-        creditsCount: 50,
-        description: "Perfect for quick revisions and trying out AI-powered notes.",
-        features: [
-            "Generate AI notes",
-            "Exam-focused answers",
-            "Diagrams & charts",
-            "Fast generation",
-        ],
-        accentColor: "accent",
-    },
-    {
-        id: "popular",
-        title: "Popular",
-        price: "₹200",
-        amount: 200,
-        credits: "120 credits",
-        creditsCount: 120,
-        description: "Best value for students preparing for exams.",
-        features: [
-            "All Starter features",
-            "More credits per ₹",
-            "Revision mode access",
-            "Priority AI response",
-        ],
-        popular: true,
-        accentColor: "gold",
-    },
-    {
-        id: "pro",
-        title: "Pro Learner",
-        price: "₹500",
-        amount: 500,
-        credits: "300 credits",
-        creditsCount: 300,
-        description: "For serious exam preparation and full syllabus coverage.",
-        features: [
-            "Maximum credit value",
-            "Unlimited revisions",
-            "Charts & diagrams",
-            "Ideal for full syllabus",
-            "Early access to features",
-        ],
-        accentColor: "accent",
-    },
+  {
+    id: "starter",
+    title: "Starter",
+    price: "₹99",
+    amount: 99,
+    credits: "99 Credits",
+    creditsCount: 99,
+    description:
+      "Perfect for trying out StudyMint and generating AI-powered study notes.",
+    features: [
+      "99 AI Credits",
+      "Generate Notes",
+      "Exam-focused answers",
+      "Diagrams & charts",
+      "Fast generation",
+    ],
+    accentColor: "accent",
+  },
+
+  {
+    id: "pro",
+    title: "Pro",
+    price: "₹299",
+    amount: 299,
+    credits: "299 Credits",
+    creditsCount: 299,
+    description:
+      "Best value for students preparing for exams and regular study sessions.",
+    features: [
+      "299 AI Credits",
+      "Everything in Starter",
+      "Revision Mode",
+      "Priority AI Responses",
+      "More Notes & Summaries",
+    ],
+    popular: true,
+    accentColor: "gold",
+  },
+
+  {
+    id: "premium",
+    title: "Premium",
+    price: "₹499",
+    amount: 499,
+    credits: "499 Credits",
+    creditsCount: 499,
+    description:
+      "For serious learners who use StudyMint daily and need maximum credits.",
+    features: [
+      "499 AI Credits",
+      "Everything in Pro",
+      "Maximum Value",
+      "Heavy Usage Support",
+      "Best Credit-to-Price Ratio",
+    ],
+    accentColor: "accent",
+  },
 ];
 
 interface PricingCardProps {
@@ -279,24 +290,39 @@ setPayingAmount(
            await handlePaying(
   planId as
     | "starter"
-    | "popular"
-    | "pro"
+| "pro"
+| "premium"
 );
         } finally {
             setPaying(false);
             setPayingAmount(null);
         }
       };
+    const dispatch = useDispatch<AppDispatch>();
+
+
+          const handleSignOut = async () => {
+              await signOutUser(dispatch, navigate);
+          };
+const { userData } = useSelector((state: RootState) => state.user);
+  if (!userData) return null;
 
     return (
         <div className="min-h-screen bg-bg">
-            <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-16">
+               <DashboardHeader
+                userName={userData.name}
+                credits={userData.credits}
+                onSignOut={handleSignOut}
+                onBuyCredits={() => {}}
+                onHistory={() => navigate("/history")}
+            />
+            <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-16 pb-20">
                 <motion.button
                     initial={{ opacity: 0, x: -8 }}
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ duration: 0.4, ease: easeOut }}
                     onClick={() => navigate("/")}
-                    className="inline-flex cursor-pointer items-center gap-2 rounded-xl border border-border bg-surface px-3.5 py-2 text-xs font-medium text-text-secondary hover:text-text-primary hover:border-accent/30 shadow-soft transition-all duration-200 mb-12"
+                    className="inline-flex cursor-pointer mt-6 items-center gap-2 rounded-xl border border-border bg-surface px-3.5 py-2 text-xs font-medium text-text-secondary hover:text-text-primary hover:border-accent/30 shadow-soft transition-all duration-200 mb-10"
                 >
                     <ArrowLeft className="w-3.5 h-3.5" />
                     Back
