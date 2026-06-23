@@ -4,14 +4,14 @@ const userSchema = new mongoose.Schema({
 
     name: {
         type: String,
-        require: true,
+        required: true,
               trim: true,
       minlength: 2,
       maxlength: 100,
     },
     email: {
         type: String,
-        require: true,
+        required: true,
         unique: true,
            lowercase: true,
       trim: true,
@@ -23,7 +23,7 @@ const userSchema = new mongoose.Schema({
     credits: {
         type: Number,
         default: 50,
-        minimum: 0
+        min: 0
     },
     isCreditAvailable: {
         type: Boolean,

@@ -2,6 +2,7 @@ import type { Request, Response } from "express";
 import razorpay from "../config/razorpay.js";
 import paymentModel from "../models/payment.model.js";
 import { CREDIT_PLANS } from "../utils/plans.js";
+import { createOrderSchema } from "../schemas/payment.schema.js";
 
 export const createOrder = async (req : Request, res:Response) => {
 
@@ -16,7 +17,18 @@ export const createOrder = async (req : Request, res:Response) => {
 
 
 try{
-const { plan } = req.body;
+
+    const parsedData = createOrderSchema.safeParse(req.body);
+
+    if (!parsedData.success) {
+  return res.status(400).json({
+    success: false,
+    message:"Invalid Plan",
+    errors: parsedData.error.flatten(),
+  });
+}
+ 
+const {plan} = parsedData.data ;
 
   const selectedPlan = CREDIT_PLANS[plan];
 
