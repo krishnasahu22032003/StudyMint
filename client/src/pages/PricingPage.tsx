@@ -257,6 +257,83 @@ const PricingCard = ({
     );
 };
 
+const Pricing = () => {
+    const navigate = useNavigate();
+    const [selectedPrice, setSelectedPrice] = useState<number | null>(null);
+    const [paying, setPaying] = useState(false);
+    const [payingAmount, setPayingAmount] = useState<number | null>(null);
 
+    const onBuy = async (amount: number) => {
+        setPayingAmount(amount);
+        setPaying(true);
+        try {
+            await handlePaying(amount);
+        } finally {
+            setPaying(false);
+            setPayingAmount(null);
+        }
+      };
+
+    return (
+        <div className="min-h-screen bg-bg">
+            <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-16">
+                <motion.button
+                    initial={{ opacity: 0, x: -8 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ duration: 0.4, ease: easeOut }}
+                    onClick={() => navigate("/")}
+                    className="inline-flex cursor-pointer items-center gap-2 rounded-xl border border-border bg-surface px-3.5 py-2 text-xs font-medium text-text-secondary hover:text-text-primary hover:border-accent/30 shadow-soft transition-all duration-200 mb-12"
+                >
+                    <ArrowLeft className="w-3.5 h-3.5" />
+                    Back
+                </motion.button>
+
+                <motion.div
+                    custom={0}
+                    variants={fadeUp}
+                    initial="hidden"
+                    animate="show"
+                    className="text-center mb-14"
+                >
+                    <div className="inline-flex items-center gap-2 rounded-full border border-border bg-surface px-3.5 py-1.5 mb-5 shadow-soft">
+                        <Sparkles className="w-3.5 h-3.5 text-gold" />
+                        <span className="text-xs font-medium text-text-secondary">Simple pricing</span>
+                    </div>
+                    <h1 className="font-display text-4xl sm:text-5xl font-semibold text-text-primary tracking-tight">
+                        Buy <span className="text-gradient-accent">credits.</span>
+                    </h1>
+                    <p className="mt-4 text-sm sm:text-base text-text-secondary max-w-sm mx-auto leading-relaxed">
+                        One-time purchases. No subscriptions, no surprises — top up whenever you need.
+                    </p>
+                </motion.div>
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 lg:gap-6 items-start">
+                    {plans.map((plan, i) => (
+                        <PricingCard
+                            key={plan.id}
+                            plan={plan}
+                            isSelected={selectedPrice === plan.amount}
+                            onSelect={setSelectedPrice}
+                            onBuy={onBuy}
+                            paying={paying}
+                            payingAmount={payingAmount}
+                            index={i + 1}
+                        />
+                    ))}
+                </div>
+
+                <motion.p
+                    custom={5}
+                    variants={fadeUp}
+                    initial="hidden"
+                    animate="show"
+                    className="text-center text-xs text-text-tertiary mt-10"
+                >
+                    Credits never expire · Secure checkout · GST included
+                </motion.p>
+            </div>
+        </div>
+    );
+};
 
 export default Pricing;
