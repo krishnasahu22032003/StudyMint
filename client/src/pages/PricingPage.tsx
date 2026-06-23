@@ -316,12 +316,12 @@ const { userData } = useSelector((state: RootState) => state.user);
                 onBuyCredits={() => {}}
                 onHistory={() => navigate("/history")}
             />
-            <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-16 pb-20">
+            <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-16 ">
                 <motion.button
                     initial={{ opacity: 0, x: -8 }}
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ duration: 0.4, ease: easeOut }}
-                    onClick={() => navigate("/")}
+                    onClick={() => navigate("/dashboard")}
                     className="inline-flex cursor-pointer mt-6 items-center gap-2 rounded-xl border border-border bg-surface px-3.5 py-2 text-xs font-medium text-text-secondary hover:text-text-primary hover:border-accent/30 shadow-soft transition-all duration-200 mb-10"
                 >
                     <ArrowLeft className="w-3.5 h-3.5" />

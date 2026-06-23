@@ -13,6 +13,7 @@ import AppLayout from "./layouts/AppLayout";
 import HistoryPage from "./pages/HistoryPage";
 import NotesPage from "./pages/NotesPage";
 import PricingPage from "./pages/PricingPage";
+import PaymentFailed from "./pages/PaymenFailed";
 
 type Props = {};
 
@@ -103,6 +104,10 @@ const App = (props: Props) => {
             }
           />
         </Route>
+        <Route
+  path="/payment-failed"
+  element={<PaymentFailed />}
+/>
       </Routes>
     </>
   );

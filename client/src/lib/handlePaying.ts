@@ -41,7 +41,10 @@ export default async function handlePaying(
             response.razorpay_signature,
         });
 
-      alert(result.message);
+      if (result.success) {
+  window.location.href =
+    "/payment-success";
+}
     },
 
     theme: {
@@ -51,6 +54,25 @@ export default async function handlePaying(
 
   const razorpay =
     new window.Razorpay(options);
+
+ razorpay.on(
+  "payment.failed",
+  function (response: any) {
+    console.error(
+      "Payment Failed:",
+      response
+    );
+
+    sessionStorage.setItem(
+      "paymentError",
+      response?.error?.description ||
+        "Payment failed"
+    );
+
+    window.location.href =
+      "/payment-failed";
+  }
+);
 
   razorpay.open();
 }
