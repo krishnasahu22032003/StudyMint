@@ -113,6 +113,27 @@ const App = (props: Props) => {
           path="/payment-success"
           element={<PaymentSuccess />}
         />
+
+        <Route
+  path="/privacy-policy"
+  element={<PrivacyPolicy />}
+/>
+
+<Route
+  path="/terms-and-conditions"
+  element={<TermsAndConditions />}
+/>
+
+<Route
+  path="/refund-policy"
+  element={<RefundPolicy />}
+/>
+
+<Route
+  path="/contact"
+  element={<ContactPage />}
+/>
+
       </Routes>
     </>
   );
