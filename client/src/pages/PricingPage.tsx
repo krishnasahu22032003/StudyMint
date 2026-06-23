@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { Check, Zap, Star, Sparkles, ArrowRight, ArrowLeft } from "lucide-react";
-// import handlePaying from "../lib/handlePaying";
+import handlePaying from "../lib/handlePaying";
 
 const easeOut = [0.22, 1, 0.36, 1] as const;
 
@@ -85,7 +85,7 @@ interface PricingCardProps {
     plan: PricingPlan;
     isSelected: boolean;
     onSelect: (amount: number) => void;
-    onBuy: (amount: number) => void;
+    onBuy: (planId: string) => void;
     paying: boolean;
     payingAmount: number | null;
     index: number;
@@ -200,7 +200,7 @@ const PricingCard = ({
                     disabled={isPayingThisCard}
                     onClick={(e) => {
                         e.stopPropagation();
-                        onBuy(plan.amount);
+                        onBuy(plan.id);
                     }}
                     className={`
                         w-full rounded-2xl py-3 text-sm font-semibold
@@ -263,11 +263,25 @@ const Pricing = () => {
     const [paying, setPaying] = useState(false);
     const [payingAmount, setPayingAmount] = useState<number | null>(null);
 
-    const onBuy = async (amount: number) => {
-        setPayingAmount(amount);
+    const onBuy = async (planId: string) => {
+        const selectedPlan =
+  plans.find(
+    (plan) => plan.id === planId
+  );
+
+if (!selectedPlan) return;
+
+setPayingAmount(
+  selectedPlan.amount
+);
         setPaying(true);
         try {
-            await handlePaying(amount);
+           await handlePaying(
+  planId as
+    | "starter"
+    | "popular"
+    | "pro"
+);
         } finally {
             setPaying(false);
             setPayingAmount(null);
