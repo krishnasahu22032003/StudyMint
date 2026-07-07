@@ -6,6 +6,7 @@ import cors from  "cors" ;
 import NotesRouter from "./routes/NotesRoutes.js";
 import PdfRouter from "./routes/PdfRoutes.js";
 import PaymentRouter from "./routes/PaymentRoute.js";
+import HealthRouter from "./routes/HealthRoute.js";
 
 const app = express() ;
 
@@ -20,5 +21,6 @@ app.use("/api/v1/user" , UserRouter) ;
 app.use("/api/v1/notes" , NotesRouter) ;
 app.use("/api/v1/pdf" , PdfRouter);
 app.use("/api/v1/payment", PaymentRouter);
+app.use("/api/v1/health", HealthRouter);
 
 startServer(app) ;
