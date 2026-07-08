@@ -17,9 +17,7 @@ import TermsAndConditions from "./pages/TermsAndConditions";
 import RefundPolicy from "./pages/RefundPolicy";
 import ContactPage from "./pages/ContactPage";
 
-type Props = {};
-
-const App = (props: Props) => {
+const App = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {

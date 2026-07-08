@@ -18,7 +18,6 @@ const LandingPage = () => {
 <Testimonials/>
 <Pricing/>
 <CTA/>
-<Footer/>
     </main>
   );
 };

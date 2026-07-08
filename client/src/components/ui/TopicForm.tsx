@@ -5,7 +5,7 @@ import createNotes from "../../lib/createNotes";
 import { useDispatch } from "react-redux";
 import { updateCredits } from "../../redux/userSlice";
 import type { NotesResult } from "../../types/notes";
-import { Sparkles, ChevronDown, ChevronUp } from "lucide-react";
+import { Sparkles, ChevronDown } from "lucide-react";
 import { toast } from "sonner";
 
 export type GenerateNotesParams = {

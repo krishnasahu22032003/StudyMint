@@ -11,7 +11,6 @@ import {
   CircleHelp,
   X,
 } from "lucide-react";
-import Button from "./Button";
 import MermaidSetup from "./MermaidSetup";
 import RechartSetUp from "./RechartSetUp";
 import { downloadPdf } from "../../lib/downloadPdf";

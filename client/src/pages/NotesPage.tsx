@@ -5,7 +5,7 @@ import type { AppDispatch, RootState } from "../redux/store";
 import signOutUser from "../lib/handleSignOut";
 import TopicForm from "../components/ui/TopicForm";
 import { useState } from "react";
-import { BookOpen, Sparkles, Wand2 } from "lucide-react";
+import { BookOpen, Wand2 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import Sidebar from "../components/ui/SideBar";
 import FinalResult from "../components/ui/FinalResutl";
