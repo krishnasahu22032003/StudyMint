@@ -11,15 +11,23 @@ function PaymentSuccess() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  useEffect(() => {
-    getUserDetails(dispatch);
+useEffect(() => {
+  let attempts = 0;
 
-    const timer = setTimeout(() => {
+  const interval = setInterval(async () => {
+    await getUserDetails(dispatch);
+
+    attempts++;
+
+    if (attempts >= 5) {
+      clearInterval(interval);
+
       navigate("/dashboard");
-    }, 5000);
+    }
+  }, 1000);
 
-    return () => clearTimeout(timer);
-  }, [dispatch, navigate]);
+  return () => clearInterval(interval);
+}, [dispatch, navigate]);
 
   return (
     <div className="min-h-screen bg-bg flex items-center justify-center px-4">
@@ -55,7 +63,7 @@ function PaymentSuccess() {
             >
               <Sparkles className="h-3.5 w-3.5 text-gold" />
               <span className="text-xs font-medium text-text-secondary">
-                Credits Added Successfully
+                Finalizing Your Credits
               </span>
             </motion.div>
 
@@ -74,8 +82,7 @@ function PaymentSuccess() {
               transition={{ delay: 0.35 }}
               className="mt-3 text-sm leading-relaxed text-text-secondary"
             >
-              Your payment has been verified and credits have been added to your
-              StudyMint account successfully.
+              Your payment has been verified successfully. We're securely finalizing your credits. This usually takes just a few seconds.
             </motion.p>
 
             <motion.div
