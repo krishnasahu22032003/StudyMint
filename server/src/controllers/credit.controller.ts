@@ -127,44 +127,28 @@ export const verifyPayment = async (req : Request, res:Response) => {
       });
     }
 
-    if (payment.status === "paid") {
-      return res.status(200).json({
-        success: true,
-        message: "Payment has already been processed.",
-      });
-    }
+if (
+  payment.status === "verified" ||
+  payment.status === "paid"
+) {
+  return res.status(200).json({
+    success: true,
+    message: "Payment already verified.",
+  });
+}
 
-    const updatedUser = await userModel.findByIdAndUpdate(
-      payment.user,
-      {
-        $inc: {
-          credits: payment.credits,
-        },
-      },
-      {
-        new: true,
-      }
-    );
 
-    if (!updatedUser) {
-      return res.status(404).json({
-        success: false,
-        message: "User associated with this payment was not found.",
-      });
-    }
+payment.razorpayPaymentId = razorpay_payment_id;
+payment.razorpaySignature = razorpay_signature;
 
-    payment.status = "paid";
-    payment.razorpayPaymentId = razorpay_payment_id;
-    payment.razorpaySignature = razorpay_signature;
+payment.status = "verified";
 
-    await payment.save();
+await payment.save();
 
-    return res.status(200).json({
-      success: true,
-      message: "Payment verified successfully. Credits added to your account.",
-      creditsAdded: payment.credits,
-      currentCredits: updatedUser.credits,
-    });
+return res.status(200).json({
+  success: true,
+  message: "Payment verified successfully. Waiting for confirmation.",
+});
   } catch (error) {
     console.error(
       "Error while verifying payment:",
@@ -184,6 +168,7 @@ export const paymentWebhook = async (
   res: Response
 ) => {
   try {
+    // Razorpay sends this header
     const webhookSignature = req.headers[
       "x-razorpay-signature"
     ] as string;
@@ -196,16 +181,14 @@ export const paymentWebhook = async (
     }
 
     if (!process.env.RAZORPAY_WEBHOOK_SECRET) {
-      console.error("RAZORPAY_WEBHOOK_SECRET is missing.");
-
       return res.status(500).json({
         success: false,
-        message: "Webhook configuration error.",
+        message: "Webhook secret not configured.",
       });
     }
 
-    // Verify webhook signature
-    const expectedSignature = crypto
+    // Verify webhook signature using RAW body
+    const generatedSignature = crypto
       .createHmac(
         "sha256",
         process.env.RAZORPAY_WEBHOOK_SECRET
@@ -213,14 +196,14 @@ export const paymentWebhook = async (
       .update(req.body)
       .digest("hex");
 
-    if (expectedSignature !== webhookSignature) {
+    if (generatedSignature !== webhookSignature) {
       return res.status(400).json({
         success: false,
         message: "Invalid webhook signature.",
       });
     }
 
-    // Parse payload AFTER signature verification
+    // Parse raw body after verification
     const body = JSON.parse(req.body.toString());
 
     const event = body.event;
@@ -228,63 +211,67 @@ export const paymentWebhook = async (
     console.log("Webhook Event:", event);
 
     switch (event) {
+      // Payment Successful
       case "payment.captured":
       case "order.paid": {
-        const paymentEntity =
-          body.payload.payment.entity;
+        const paymentEntity = body.payload.payment.entity;
 
         const payment = await paymentModel.findOne({
           razorpayOrderId: paymentEntity.order_id,
         });
 
         if (!payment) {
-          console.log(
-            "Payment not found:",
-            paymentEntity.order_id
-          );
-
-          return res.status(200).json({
-            success: true,
-          });
+          console.log("Payment not found.");
+          break;
         }
 
-        // Prevent duplicate credits
-        if (payment.status === "paid") {
-          return res.status(200).json({
-            success: true,
-          });
+        // Already processed?
+     if (payment.status === "paid") {
+    console.log("Already processed.");
+    return res.status(200).json({
+        success: true
+    });
+}
+
+        // Add credits
+        const updatedUser = await userModel.findByIdAndUpdate(
+          payment.user,
+          {
+            $inc: {
+              credits: payment.credits,
+            },
+          },
+          {
+            new: true,
+          }
+        );
+
+        if (!updatedUser) {
+          console.log("User not found.");
+          break;
         }
-
-        const user = await userModel.findById(payment.user);
-
-        if (!user) {
-          return res.status(200).json({
-            success: true,
-          });
-        }
-
-        user.credits += payment.credits;
-
-        await user.save();
 
         payment.status = "paid";
-        payment.razorpayPaymentId =
-          paymentEntity.id;
-        payment.razorpaySignature =
-          webhookSignature;
+ if (!payment.razorpayPaymentId) {
+  payment.razorpayPaymentId = paymentEntity.id;
+}
+
+if (!payment.razorpaySignature) {
+  payment.razorpaySignature = webhookSignature;
+}
 
         await payment.save();
 
         console.log(
-          `Credits added successfully to user ${user._id}`
+          `Credits Added Successfully : ${payment.credits}`
         );
 
         break;
       }
 
+      // Payment Failed
       case "payment.failed": {
-        const paymentEntity =
-          body.payload.payment.entity;
+        const paymentEntity = body.payload.payment.entity;
 
         const payment = await paymentModel.findOne({
           razorpayOrderId: paymentEntity.order_id,
@@ -292,7 +279,6 @@ export const paymentWebhook = async (
 
         if (payment) {
           payment.status = "failed";
-
           await payment.save();
         }
 
@@ -301,9 +287,15 @@ export const paymentWebhook = async (
         break;
       }
 
-      case "refund.created":
+      // Refund Created
+      case "refund.created": {
+        console.log("Refund Created");
+        break;
+      }
+
+      // Refund Processed
       case "refund.processed": {
-        console.log("Refund Event Received");
+        console.log("Refund Processed");
         break;
       }
 
@@ -314,6 +306,7 @@ export const paymentWebhook = async (
     return res.status(200).json({
       success: true,
     });
+
   } catch (error) {
     console.error("Webhook Error:", error);
 
