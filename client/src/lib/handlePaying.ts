@@ -55,6 +55,12 @@ export default async function handlePaying(
   const razorpay =
     new window.Razorpay(options);
 
+    console.log({
+  key: options.key,
+  order_id: options.order_id,
+  amount: options.amount,
+})
+
  razorpay.on(
   "payment.failed",
   function (response: any) {

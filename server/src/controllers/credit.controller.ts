@@ -47,6 +47,8 @@ const {plan} = parsedData.data ;
     receipt: `receipt_${Date.now()}`,
   });
 
+console.log("Created Order:", order);
+
   await paymentModel.create({
     user: userId,
     razorpayOrderId: order.id,
