@@ -51,8 +51,6 @@ const TopicForm = ({ setResult, setLoading, loading, setError }: GenerateNotesPa
         includeDiagram,
         includeChart,
       });
-      console.log("FULL RESPONSE:", result);
-console.log("NOTES DATA:", result.data);
       setResult(result.data);
       toast.success(
   `Notes generated successfully. ${result.creditsLeft} credits remaining`
